@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="CssFinal/allcolors.css">
+</head>
+<body>
+    <div class="formularioIS">
+        <br><br>
+        <form id="formIniciarSesion">
+            <h1> Iniciar <b style="color: #9F79FF;">Sesión</b></h1>
+            <label for="CorreoI"><b>Ingrese su correo electrónico</b></label><br><br>
+            <input type="email" name="CorreoI" id="CorreoI" required><br><br>
+        
+            <label for="ContraseñaI"><b>Ingrese su Contraseña</b></label><br><br> 
+            <input type="password" name="ContraseñaI" id="ContraseñaI" required><br>
+            
+            <input type="checkbox" id="mostrarPassword"><br>
+            <label for="mostrarPassword">Mostrar contraseña</label>
+
+            <p><b>¿Olvidaste tu </b><a href="#" style="color: #9F79FF; text-decoration: none; cursor: pointer;" id="olvidar" ><b>Contraseña?</b></a></p>
+            <br>
+            <button type="submit" class="botones">Acceder</button>
+            
+            <p><b>¿No tienes una cuenta?</b></p>
+            <a href="Registrarse.html" style="color: #9F79FF; text-decoration: none;">Registrarse</a><br><br>
+        </form>        
+    </div>
+    <script src="BDFinal/iniciosesion.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

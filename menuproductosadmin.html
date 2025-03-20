@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koki Shop: Admin</title>
+    <link rel="stylesheet" href="CssFinal/allcolors.css">
+    <link rel="stylesheet" href="CssFinal/navBar2.css">
+    <script type = "module" src="JSFinal/barraDesplegableAdmin.js"></script>
+</head>
+<body>
+    <header>
+        <div class="interior">
+        <a class="logo"><img src="ImgFinal/LogoNavBar.png" alt="Logo" id="logoMarca"></a>
+        <nav class="navegacion">
+            <ul>
+            <li class="submenu">
+    
+                <!-- Cambiar por el ID del usuario -->
+                <a href="#" id="cuentaCC"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>
+                <ul class="hijos"> <br>
+                    <!-- Barra desplegable personalizable -->
+                    <li><a href="config.html">Configuración</a></li>
+                    <li><a href="usuarios.html">Usuarios</a></li>
+                    <li><a href="mensajes.html">Bandeja de Correos</a></li>
+                    <li><a href="graficas.html">Graficos</a></li>
+                    <li><a href="Menuprincip.html" id="csesion">Cerrar sesión</a></li>
+                </ul>
+            </li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+
+    <section>
+        <!-- Apartado donde esta el producto destacado -->
+        <section class="destacados" id="productoDestacado">
+            <div class="destacadosDesc">
+                <h1 id="nombreProductoD">N/A</h1>
+                <h4 id="marcaProductoD">N/A</h4>
+                <h2 id="precioProductoD">N/A</h2>
+                <h5 id="cantidadProductoD">N/A</h5>
+                <p id="descripcionProductoD">N/A</p>
+                
+                <!-- <div class="divbotonmenos">
+                    <button class="botonmenos"><img src="ImgFinal/minus.png" alt="menos" id="menosD"></button>
+                    <pre id="cantidadD">0</pre>
+                    <button class="botonmenos"><img src="ImgFinal/plus.png" alt="mas" id="masD"></button>
+                </div> -->
+                
+                <!-- <button class="destacadosCarrito" id="agregarD"><b>+</b></button> -->
+            </div>
+
+            <div class="destacadosfoto">
+                <img src="" alt="Producto destacado" id="imagenProductoD">
+            </div>
+        </section>
+        
+        
+        <!-- Productos Dinamicos -->
+        <section class="fondotodosLP" id="productos">
+            <h1>Todos los productos</h1>
+            <div class="todosLP" id="contenedorProductos"></div>
+
+            <div class="todosLP" id="esconder">
+                <div class="indivtodosLP">
+
+                    <img id="agregarProd" src="ImgFinal/plus.png" alt="casco">
+                    <h1>Agregar Producto</h1>
+
+                </div>
+            </div>
+
+        </section>
+</body>
+</html>

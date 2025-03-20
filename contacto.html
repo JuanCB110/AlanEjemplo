@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Koki Shop</title>
+        <link rel="stylesheet" href="CssFinal/allcolors.css">
+        <link rel="stylesheet" href="CssFinal/navBar2.css">
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+        <script type="text/javascript">
+        emailjs.init('luHdgUw2yD997h52T')
+        </script>
+        <script type ="module" src="BDFinal/contacto.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <!-- Para el botton de los productos xd -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    </head>
+<body>
+    <header>
+        <div class="interior">
+        <a class="logo"><img src="ImgFinal/LogoNavBar.png" alt="Logo" id="logoMarca"></a>
+        <nav class="navegacion">
+            <ul>
+            <li><a href="cesta.html"> <span id="ces" class="material-symbols-rounded" style=" vertical-align: bottom; font-size: 2em;">shopping_cart</span></a></li>
+            <li class="submenu">
+                
+                <!-- Cambiar por el ID del usuario -->
+                <a href="#" id="cuentaCC"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</a>
+                <ul class="hijos"> <br>
+                    <!-- Barra desplegable personalizable -->
+                <li><a href="config.html">Configuracion</a></li>
+                <li><a href="miscompras.html">Mis compras</a></li>
+                <li><a href="contacto.html">Contactanos</a></li>
+                <li><a href="Menuprincip.html" id="csesion">Cerrar Sesión</a></li>
+                </ul>
+            </li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+
+    <!-- Seccion para el fondo de contactanos -->
+    <section class="divFondo">
+        <div class="textoFondo">
+            <h1>Contáctanos</h1>
+            <br/>
+            <p>Koki Shop es una tienda online de diversos productos exóticos para mascotas, nos hemos dedicado a ofrecer a nuestros clientes una experiencia 
+            de compra única, con productos de alta calidad y un servicio al cliente excepcional.</p>
+        </div>
+    </section>
+    <br/><br/>
+    <!-- Seccion del formulario al lado izquierdo -->
+    <section class="formularioContacto">
+
+        <form id="form">
+            <div class="field">
+            <label for="from_name">Nombre:</label>
+            <input type="text" name="from_name" id="from_name" readonly required>
+            </div>
+            <div class="field">
+            <label for="message">Mensaje:</label><br>
+            <textarea name="message" id="message" cols="89" rows="8" style="font-size: 15px; resize: none; overflow: auto; background-color: #ffffff; border: solid 2px #9f79ff; border-radius:5px;"></textarea>
+            <!-- <input type="text" name="message" id="message" required> -->
+            </div>
+            <div class="field">
+            <label for="email_id">Correo:</label>
+            <input type="text" name="email_id" id="email_id" readonly required>
+            </div>
+            <div class="field">
+            <label for="reply_to">Replicar:</label>
+            <input type="text" name="reply_to" id="reply_to" required>
+            </div>
+            <br>
+            <input class="botones" type="submit" id="button" value="Enviar" style="width: 20%;">
+            <button class="botones" id="reset">Restablecer</button>
+        </form>
+
+        <br>
+
+        <form>
+            <div class="field">
+                <label for="from_name">Soporte: </label><br>
+                <textarea name="contestar" id="contestar" readonly style="background-color: #f5f5f5; border-color: #6e7076; font-size: 14px; resize: none; overflow: auto;" cols="92" rows="8" ></textarea>
+                <!-- <input type="text" readonly style="background-color: #f5f5f5; border-color: #6e7076;"> -->
+            </div>
+        </form>
+
+    </section>
+    <!-- Seccion para los links de redes sociales y eso -->
+    <section class="divIconos">
+        <a href="#"><img src="ImgFinal/facebook.png" alt="facebook" class="iconosDeContacto"></a>
+        <a href="#"> <img src="ImgFinal/xpng.png" alt="x" class="iconosDeContacto" style="margin-top: 3%;"></a>
+        <a href="#"> <img src="ImgFinal/instagram.png" alt="x" class="iconosDeContacto" style="margin-top: 2.5%; width: 9%;"></a>
+        <br><br>
+    </section>
+    
+    <section class="divIconos">
+        <br><br>
+        <a href="#"><img src="ImgFinal/ubicacion.png" alt="ubicacion" style="width: 10%;"></a>
+        <p style="color: #6E7076;">Universidad Autónoma de Sinaloa
+            Los Mochis, Sinaloa</p>
+        <br><br>
+        <a href="#"><img src="ImgFinal/correo.png" alt="imgCorreo" style="width: 10%; "></a>
+        <p style="color: #6E7076;">correodeejemplo@gmail.com</p>
+        <br><br>
+        <a href="#"><img src="ImgFinal/telefono.png" alt="telefono" style="width: 10%;"></a>
+        <p style="color: #6E7076;">+52 6682250806</p>
+    </section>
+    
+</body>
+</html>
