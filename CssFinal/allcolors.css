@@ -1,158 +1,162 @@
+/* Estilos base */
 html {
     scroll-behavior: smooth;
 }
 body{
     background-color: #F5F5F5;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-/* ---------------MULTIPLES USOS DURANTE EL CODIGO---------------- */
 
-.botonesy{
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Botones y controles comunes */
+.botonesy, .botones {
     background-color: #fff;
     color: #9F79FF;
     border-radius: 5px;
-    border-color: #9F79FF;
-    padding: 0% 2%;
-    margin: 0%;
-    margin-left: 100%;
-    border-style: solid;    
+    border: solid 1px #9F79FF;
+    padding: 0 2%;
+    transition: all 0.2s ease;
 }
 
-.botonesy:hover{
+.botonesy {
+    margin: 0;
+    margin-left: 100%;
+}
+
+.botones {
+    margin: 0 1% 2%;
+}
+
+.botonesy:hover, .botones:hover {
     background-color: #9F79FF;
     color: #fff;
+    transform: scale(1.05);
 }
 
 .botonesChilos {
     padding: 30px;
 }
 
-.botones{
-    background-color: #fff;
-    color: #9F79FF;
-    border-radius: 5px;
-    border-color: #9F79FF;
-    padding: 0% 2%;
-    margin: 0 1% 2%;
-    border-style: solid;
-    transition: transform 0.2s ease;
-}
-
-.botones:hover{
-    background-color: #9F79FF;
-    color: #fff;
-    transform: scale(1.05);
-}
-
-/* --------------------------------------------------------------- */
-/* .............................................Seccion de menu principal............................................ */
-/* Imagen gigante del logo y de los productos principales*/
-
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	text-decoration: none;
-}
-
-/* ------------------BARRA DE NAVEGACIÓN--------------------------- */
+/* Navegación */
 header{
-	width: 100%;
-	height: 90px;
-	background-color: #fff;
+    width: 100%;
+    height: 90px;
+    background-color: #fff;
 }
+
 .interior{
-	max-width: 100%;
-	padding: 0 10px;
-	margin: auto;
+    max-width: 100%;
+    padding: 0 10px;
+    margin: auto;
 }
+
 .logo{
-	float: left;
-	padding: 5px 20px 0;
+    float: left;
+    padding: 5px 20px 0;
 }
+
 .logo img{
-	height: 80px;
+    height: 80px;
     transition: transform 0.2s ease;
 }
+
 .logo img:hover{
     transform: scale(1.02);
     cursor: pointer;
 }
+
 .navegacion{
-	float: right;
-	display: flex;
-	align-items: center;
-	min-height: 90px;
-	z-index: 1000;
+    float: right;
+    display: flex;
+    align-items: center;
+    min-height: 90px;
+    z-index: 1000;
 }
+
 .navegacion ul{
-	list-style: none;
-	padding: 0 10px;
+    list-style: none;
+    padding: 0 10px;
 }
+
 .navegacion ul li{
-	display: inline-block;
-	position: relative;
-	transition: .1s linear;
-	z-index: 1000;
+    display: inline-block;
+    position: relative;
+    transition: .1s linear;
+    z-index: 1000;
 }
+
 .navegacion ul li:hover{
-	transform: scale(1.02);
+    transform: scale(1.02);
 }
+
 .navegacion ul li a{
-	color: #6E7076;
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 15px;
-	font-weight: bold;
-	padding: 12px 20px;
-	transition: .3s linear;
+    color: #6E7076;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 12px 20px;
+    transition: .3s linear;
 }
+
 .navegacion ul li a:hover{
-	color: #9F79FF;
-	transform: scale(1.02);
+    color: #9F79FF;
+    transform: scale(1.02);
 }
+
 .navegacion ul li:hover .hijos{
-	display: block;
+    display: block;
 }
+
 .navegacion .submenu .hijos{
-	display: none;
-	background: #fff;
-	position: absolute;
-	width: 100%;
+    display: none;
+    background: #fff;
+    position: absolute;
+    width: 100%;
     border-radius: 5px;
 }
+
 .navegacion .submenu .hijos li{
-	display: block;
-	overflow: hidden;
-	border-bottom: none;
+    display: block;
+    overflow: hidden;
+    border-bottom: none;
 }
+
 .navegacion .submenu .hijos li a{
-	display: block;
+    display: block;
 }
-.navegacion .submenu .hijos li :hover{
+
+.navegacion .submenu .hijos li:hover{
     background-color: #9F79FF;
     border-radius: 10px;
 }
+
 .navegacion .submenu .hijos li a:hover{
     color: #fff;
 }
 
+/* Imágenes y elementos destacados */
 .imgGigante{
     border-radius: 100%;
     width: 40%;
     margin: 2% 25% 0% 30%;
-    border: solid 6px  #9F79FF;     
+    border: solid 6px #9F79FF;     
 }
-/* Botones grandes como losde registrarse */
+
+/* Alineación de bloques */
 .centrarBloque{
     margin: auto;
     margin-bottom: 1%;
     text-align: left;
-    margin-top: 2%;
-    background-color: #9F79FF;
-    border-radius: 5px;
-    width: 26%;
-    padding: 20px 70px;
 }
 
 .botonGrande{ 

@@ -1,8 +1,27 @@
 // Importa las funciones que necesitas de los SDK que necesitas
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, onAuthStateChanged  } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
-import { doc, setDoc, getFirestore, getDoc, updateDoc, getDocs, collection, addDoc, query, where, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js';
-import { ref, getStorage, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-storage.js";
+import { 
+  getAuth, 
+  onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
+import { 
+  doc, 
+  setDoc, 
+  getFirestore, 
+  getDoc, 
+  updateDoc, 
+  getDocs, 
+  collection, 
+  addDoc, 
+  query, 
+  where
+} from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js';
+import { 
+  ref, 
+  getStorage, 
+  uploadBytes, 
+  getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-storage.js";
 import { obtenerDatosUsuario, cerrarSesion } from "../BDFinal/conexion.js";
 
 
@@ -21,6 +40,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
+const storage = getStorage(app);
+
+// Caché para datos frecuentemente consultados
+const cache = {
+  productos: null,
+  proveedores: null,
+  usuarios: null,
+  lastFetch: {
+    productos: 0,
+    proveedores: 0,
+    usuarios: 0
+  },
+  cacheDuration: 5 * 60 * 1000 // 5 minutos
+};
 
 function DashboardPage() {
   const auth = getAuth(); // Obtener la instancia de autenticación
@@ -120,12 +153,23 @@ async function obtenerUsuario(idUsuario){
 
 //Funcion para obtener los datos de proveedor nube
 async function Proveedor() {
+  // Verificar caché
+  const ahora = Date.now();
+  if (cache.proveedores && ahora - cache.lastFetch.proveedores < cache.cacheDuration) {
+    return cache.proveedores;
+  }
+  
   try {
     const proveedoresSnapshot = await getDocs(collection(firestore, 'proveedor'));
     const proveedores = [];
     proveedoresSnapshot.forEach((doc) => {
       proveedores.push({ id: doc.id, data: doc.data() });
     });
+    
+    // Actualizar caché
+    cache.proveedores = proveedores;
+    cache.lastFetch.proveedores = ahora;
+    
     return proveedores;
   } catch (error) {
     console.error("Error al obtener proveedores:", error);
@@ -135,12 +179,23 @@ async function Proveedor() {
 
 //Funcion para obtener los datos de productos nube
 async function Productos() {
+  // Verificar caché
+  const ahora = Date.now();
+  if (cache.productos && ahora - cache.lastFetch.productos < cache.cacheDuration) {
+    return cache.productos;
+  }
+  
   try {
     const productosSnapshot = await getDocs(collection(firestore, 'productos'));
     const productos = [];
     productosSnapshot.forEach((doc) => {
       productos.push({ id: doc.id, data: doc.data() });
     });
+    
+    // Actualizar caché
+    cache.productos = productos;
+    cache.lastFetch.productos = ahora;
+    
     return productos;
   } catch (error) {
     console.error("Error al obtener proveedores:", error);
@@ -1284,22 +1339,6 @@ async function agregarProducto(descripcion, imagenUrl, id_proveedor, nombre, pre
       console.error('Error al agregar el producto:', error.message);
   }
 }
-
-//Funcion para obtener los datos de proveedor nube
-async function Proveedor() {
-  try {
-    const proveedoresSnapshot = await getDocs(collection(firestore, 'proveedor'));
-    const proveedores = [];
-    proveedoresSnapshot.forEach((doc) => {
-      proveedores.push({ id: doc.id, data: doc.data() });
-    });
-    return proveedores;
-  } catch (error) {
-    console.error("Error al obtener proveedores:", error);
-    return null;
-  }
-}
-
 
 //Dar bienvenida
 document.addEventListener('DOMContentLoaded', async function() {

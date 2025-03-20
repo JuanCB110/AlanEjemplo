@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <meta name="description" content="Iniciar sesión en Koki Shop">
+    <title>Iniciar Sesión - Koki Shop</title>
     <link rel="stylesheet" href="CssFinal/allcolors.css">
+    <link rel="preconnect" href="https://www.gstatic.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
 </head>
 <body>
     <div class="formularioIS">
@@ -12,10 +15,10 @@
         <form id="formIniciarSesion">
             <h1> Iniciar <b style="color: #9F79FF;">Sesión</b></h1>
             <label for="CorreoI"><b>Ingrese su correo electrónico</b></label><br><br>
-            <input type="email" name="CorreoI" id="CorreoI" required><br><br>
+            <input type="email" name="CorreoI" id="CorreoI" required autocomplete="email"><br><br>
         
             <label for="ContraseñaI"><b>Ingrese su Contraseña</b></label><br><br> 
-            <input type="password" name="ContraseñaI" id="ContraseñaI" required><br>
+            <input type="password" name="ContraseñaI" id="ContraseñaI" required autocomplete="current-password"><br>
             
             <input type="checkbox" id="mostrarPassword"><br>
             <label for="mostrarPassword">Mostrar contraseña</label>
@@ -28,7 +31,8 @@
             <a href="Registrarse.html" style="color: #9F79FF; text-decoration: none;">Registrarse</a><br><br>
         </form>        
     </div>
+    <script src="JSFinal/optimizaciones.js" type="module"></script>
     <script src="BDFinal/iniciosesion.js" type="module"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 </body>
 </html>

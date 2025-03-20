@@ -1,10 +1,24 @@
 // Importa las funciones que necesitas de los SDK que necesitas
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
-import { doc, setDoc, getFirestore, getDoc, updateDoc, getDocs, collection, addDoc, query, where, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js';
+import { 
+  getAuth, 
+  onAuthStateChanged 
+} from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
+import { 
+  doc, 
+  setDoc, 
+  getFirestore, 
+  getDoc, 
+  updateDoc, 
+  getDocs, 
+  collection, 
+  addDoc, 
+  query, 
+  where
+} from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js';
 import { obtenerDatosUsuario, cerrarSesion } from "../BDFinal/conexion.js";
 
-// Tu configuración de Firebase
+// Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDk8tT0LuETuAyxWKaMkpoKBAz9gmw6q5c",
   authDomain: "koki-shop-f251b.firebaseapp.com",
@@ -20,6 +34,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 
+// Cache para datos frecuentemente consultados
+const cache = {
+  productos: null,
+  proveedores: null,
+  lastFetch: {
+    productos: 0,
+    proveedores: 0
+  },
+  cacheDuration: 5 * 60 * 1000 // 5 minutos en milisegundos
+};
+
 function DashboardPage() {
   const auth = getAuth(); // Obtener la instancia de autenticación
 
@@ -32,49 +57,27 @@ function DashboardPage() {
     // Devuelve una función de limpieza para limpiar el efecto
     // return () => unsubscribe();
   }, [auth]); // Agregar auth como una dependencia para que useEffect se ejecute cada vez que auth cambie
-
-//Funciones para agregar
-//Funcion para guardar productos
-async function agregarProductos(descripcion, id_proveedor, imagenUrl, nombre, preciounitario, stock){
-
-  // Guarda la información del producto en Firestore
-  await setDoc(doc(firestore, 'productos'), {
-    descripcion: descripcion,
-    id_proveedor: id_proveedor,
-    imagenUrl: imagenUrl,
-    nombre: nombre,
-    preciounitario: Number(preciounitario),
-    stock: Number(stock)
-  });
 }
 
-//Funcion para guardar productos
+// Función para agregar a la cesta
 async function agregarCesta(cantidad, id_producto, id_usuario, nombre_producto, nombre_proveedor, preciounitario, imagenUrl){
-
-
-  const user = await obtenerDatosUsuario();  
-  const userid = user.uid;
-  //console.log(userid);
-  const cantt = await obtenerProductosEnCesta(userid);
-  let cantbd = 0;
-  const juntoid = id_producto + id_usuario;
-
-  for(let i = 0; i < cantt.length; i++){
-    const cant = cantt[i];
-
-    if(cant.data.id_producto == id_producto){
-      cantbd = parseInt(cant.data.cantidad);
-    }
-
-  }
-  cantidad = parseInt(cantidad);
-  cantidad += cantbd;
-  //console.log(cantbd);
-  //console.log(cantidad);
-  //console.log(juntoid);
-
   try {
-    // Agrega el producto a la colección 'cesta' con un ID generado automáticamente
+    const user = await obtenerDatosUsuario();  
+    const userid = user.uid;
+    const cantt = await obtenerProductosEnCesta(userid);
+    let cantbd = 0;
+    const juntoid = id_producto + id_usuario;
+
+    for(let i = 0; i < cantt.length; i++){
+      if(cantt[i].data.id_producto == id_producto){
+        cantbd = parseInt(cantt[i].data.cantidad);
+        break;
+      }
+    }
+    
+    cantidad = parseInt(cantidad) + cantbd;
+
+    // Guarda el producto en la cesta
     await setDoc(doc(firestore, 'cesta', juntoid), {
       cantidad: Number(cantidad),
       id_producto: id_producto,
@@ -84,69 +87,82 @@ async function agregarCesta(cantidad, id_producto, id_usuario, nombre_producto, 
       preciounitario: Number(preciounitario),
       imagenUrl: imagenUrl
     });
-    // alert("Producto Añadido a la Cesta");
+    
     Swal.fire({
       title: 'Producto añadido a la cesta',
       icon: 'success',
-      iconColor: '#9F79FF', // Cambia el color del ícono de éxito
-      showConfirmButton: false, // Evita que se muestre el botón de confirmación
+      iconColor: '#9F79FF',
+      showConfirmButton: false,
       timer: 2000
-  });
-  // window.location.reload();
-    console.log('Producto agregado a la cesta exitosamente.');
-    //console.log(juntoid);
-    //window.location.reload();
+    });
+    
+    return true;
   } catch (error) {
     console.error('Error al agregar producto a la cesta:', error);
+    return false;
   }
 }
 
-//Funciones para obtencion
-// Función para obtener los productos en la cesta de un usuario específico
+// Función para obtener productos en cesta
 async function obtenerProductosEnCesta(usuarioId) {
   try {
-    const cestaSnapshot = await getDocs(query(collection(firestore, 'cesta'), where('id_usuario', '==', usuarioId)));
+    const cestaSnapshot = await getDocs(query(
+      collection(firestore, 'cesta'), 
+      where('id_usuario', '==', usuarioId)
+    ));
+    
     const productosEnCesta = [];
     cestaSnapshot.forEach((doc) => {
       productosEnCesta.push({ id: doc.id, data: doc.data() });
     });
+    
     return productosEnCesta; 
   } catch (error) {
-    console.log('Error al obtener productos en la cesta', error.message);
+    console.error('Error al obtener productos en la cesta', error.message);
+    return [];
   }
 }
 
-//Obtener Usuario
+// Función para obtener datos de usuario
 async function obtenerUsuario(idUsuario){
   try {
-    //const user = auth.currentUser;
     const usuario = await getDoc(doc(firestore, 'usuario', idUsuario));
 
-    //console.log(user.uid);
-
     if (usuario.exists()) {
-      const usuarios = usuario.data();
-      return usuarios;
+      return usuario.data();
     } else {
       console.log("El usuario no existe");
+      return null;
     }
   } catch (error) {
-    console.log('Erro al obtener al Usuario: ', error.message);
+    console.error('Error al obtener al Usuario:', error.message);
+    return null;
   }
 }
 
-//Funcion para obtener los datos de proveedor nube
+// Función para obtener proveedores con caché
 async function Proveedor() {
+  // Verificar caché
+  const ahora = Date.now();
+  if (cache.proveedores && ahora - cache.lastFetch.proveedores < cache.cacheDuration) {
+    return cache.proveedores;
+  }
+  
   try {
     const proveedoresSnapshot = await getDocs(collection(firestore, 'proveedor'));
     const proveedores = [];
     proveedoresSnapshot.forEach((doc) => {
       proveedores.push({ id: doc.id, data: doc.data() });
     });
+    
+    // Actualizar caché
+    cache.proveedores = proveedores;
+    cache.lastFetch.proveedores = ahora;
+    
     return proveedores;
   } catch (error) {
     console.error("Error al obtener proveedores:", error);
-    return null;
+    return [];
   }
 }
 
@@ -682,8 +698,6 @@ async function checkCart() {
   } catch (error) {
       console.error('Error al obtener los datos de la cesta:', error);
   }
-}
-
 }
 
 document.addEventListener('DOMContentLoaded', DashboardPage());
